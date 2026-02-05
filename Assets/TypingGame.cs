@@ -6,16 +6,13 @@ public class TypingGame : MonoBehaviour {
     public Text wordText;
     public Text statsText;
 
-    private string[] displayWords = { "信号", "地下鉄", "高周集", "電気", "ビル","こんにちは","アメリカ","ひっかけ問題だよ };
-    private string[] romaWords = { "singou", "tikatetu", "koujuusyuu", "denki", "biru","konnitiha","amerika","taipingushithi };
+    private string[] displayWords = { "信号", "地下鉄", "電気", "ビル", "工事" };
+    private string[] romaWords = { "singou", "tikatetu", "denki", "biru", "kouji" };
     private int currentIdx;
-    private string typedStr;
+    private string typedStr = "";
     private float power = 100f;
     private int score = 0;
     private bool isPlaying = true;
-
-    Color themeBlue = new Color(0f, 1f, 1f);
-    Color bgDark = new Color(0f, 0.03f, 0.08f);
 
     void Start() {
         SetupScene();
@@ -23,10 +20,9 @@ public class TypingGame : MonoBehaviour {
     }
 
     void SetupScene() {
-        // --- カメラとUIの自動生成 ---
         GameObject camObj = new GameObject("Main Camera");
         Camera cam = camObj.AddComponent<Camera>();
-        cam.backgroundColor = bgDark;
+        cam.backgroundColor = new Color(0f, 0.03f, 0.08f);
         cam.clearFlags = CameraClearFlags.SolidColor;
         camObj.transform.position = new Vector3(0, 0, -10);
 
@@ -40,10 +36,11 @@ public class TypingGame : MonoBehaviour {
         wordObj.transform.SetParent(canvasObj.transform);
         wordText = wordObj.AddComponent<Text>();
         wordText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
-        wordText.fontSize = 60;
+        wordText.fontSize = 50;
         wordText.alignment = TextAnchor.MiddleCenter;
-        wordText.color = themeBlue;
+        wordText.color = Color.cyan;
         wordText.rectTransform.anchoredPosition = new Vector2(0, 0);
+        wordText.rectTransform.sizeDelta = new Vector2(800, 200);
 
         GameObject statsObj = new GameObject("StatsText");
         statsObj.transform.SetParent(canvasObj.transform);
@@ -52,6 +49,7 @@ public class TypingGame : MonoBehaviour {
         statsText.fontSize = 25;
         statsText.color = Color.white;
         statsText.rectTransform.anchoredPosition = new Vector2(0, 150);
+        statsText.rectTransform.sizeDelta = new Vector2(800, 100);
     }
 
     void Update() {
@@ -65,7 +63,7 @@ public class TypingGame : MonoBehaviour {
     void CheckInput() {
         string target = romaWords[currentIdx];
         foreach (char c in Input.inputString) {
-            if (target[typedStr.Length] == c) {
+            if (typedStr.Length < target.Length && target[typedStr.Length] == c) {
                 typedStr += c;
                 if (typedStr == target) {
                     score += target.Length * 10;
@@ -82,11 +80,8 @@ public class TypingGame : MonoBehaviour {
     }
 
     void UpdateUI() {
-        string target = romaWords[currentIdx];
-        // 打ったところをグレーにする演出
-        wordText.text = $"<color=#888888>{typedStr}</color>{target.Substring(typedStr.Length)}\n<size=40>{displayWords[currentIdx]}</size>";
-        wordText.supportRichText = true;
-        statsText.text = $"電力量: {Mathf.Floor(power)}% | スコア: {score}";
+        wordText.text = typedStr + romaWords[currentIdx].Substring(typedStr.Length) + "\n" + displayWords[currentIdx];
+        statsText.text = "POWER: " + Mathf.Floor(power) + "% | SCORE: " + score;
     }
 
     void GameOver() {
