@@ -119,13 +119,18 @@ public class TypingGame : MonoBehaviour {
         if (powerBar != null) powerBar.localScale = new Vector3(power / 100f, 1, 1);
     }
 
+       // --- この部分を探すか、新しく貼り付けてください ---
     void GameOver() {
         isPlaying = false;
         wordText.text = "BLACKOUT";
-        // unityroomへのスコア送信などはここに追加
+        wordText.color = Color.red;
+ 　　　string apiKey = "/sSp3O+cEf5Bco80+ESi+TmpCwxlZ0ndsywZzuJzumCrOkkZmSgk5ueG7yYws2j8h0RhIvtU3f7AyxOzWuakRg==";
+        UnityroomApiClient.Instance.SendScore(1, (float)score, ScoreboardWriteMode.HighScoreDesc);
+        
+        Debug.Log("ゲームオーバー！最終スコア: " + score);
     }
 
-    void SetupScene() {
+　　 void SetupScene() {
         using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
