@@ -14,9 +14,8 @@ public class TypingGame : MonoBehaviour {
 
     void Start() {
         GameObject camObj = new GameObject("Main Camera");
-        Camera cam = camObj.AddComponent<Camera>();
-        cam.backgroundColor = new Color(0f, 0.03f, 0.08f);
-        cam.clearFlags = CameraClearFlags.SolidColor;
+        camObj.AddComponent<Camera>().backgroundColor = new Color(0f, 0.03f, 0.08f);
+        camObj.GetComponent<Camera>().clearFlags = CameraClearFlags.SolidColor;
         camObj.transform.position = new Vector3(0, 0, -10);
         NextWord();
     }
