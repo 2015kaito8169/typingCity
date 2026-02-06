@@ -3,8 +3,8 @@ using UnityEngine.Networking;
 using System.Collections;
 
 public class TypingGame : MonoBehaviour {
-    private string[] romaWords = { "singou", "tikatetu", "denki", "biru", "kouji" };
-    private string[] displayWords = { "信号", "地下鉄", "電気", "ビル", "工事" };
+    private string[] romaWords = { "singou", "tikatetu", "denki", "biru", "kouji","shokuji","konnitiha","watto","ima","taipingushithi" };
+    private string[] displayWords = { "信号", "地下鉄", "電気", "ビル", "工事","食事","こんにちは","ワット","いま","ひっかけ問題" };
     private int currentIdx;
     private string typedStr = "";
     private float power = 100f;
@@ -14,8 +14,9 @@ public class TypingGame : MonoBehaviour {
 
     void Start() {
         GameObject camObj = new GameObject("Main Camera");
-        camObj.AddComponent<Camera>().backgroundColor = new Color(0f, 0.03f, 0.08f);
-        camObj.GetComponent<Camera>().clearFlags = CameraClearFlags.SolidColor;
+        Camera cam = camObj.AddComponent<Camera>();
+        cam.backgroundColor = new Color(0f, 0.03f, 0.08f);
+        cam.clearFlags = CameraClearFlags.SolidColor;
         camObj.transform.position = new Vector3(0, 0, -10);
         NextWord();
     }
