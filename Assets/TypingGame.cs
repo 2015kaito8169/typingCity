@@ -40,25 +40,22 @@ public class TypingGame : MonoBehaviour {
     }
 
     void OnGUI() {
-        GUIStyle labelStyle = new GUIStyle(GUI.skin.label);
-        labelStyle.fontSize = 40;
-        labelStyle.alignment = TextAnchor.MiddleCenter;
-        labelStyle.normal.textColor = Color.cyan;
-
+        GUIStyle style = new GUIStyle(GUI.skin.label);
+        style.fontSize = 40;
+        style.alignment = TextAnchor.MiddleCenter;
+        style.normal.textColor = Color.cyan;
         string target = romaWords[currentIdx];
         string display = typedStr + target.Substring(typedStr.Length) + "\n" + displayWords[currentIdx];
-        GUI.Label(new Rect(0, Screen.height/2 - 100, Screen.width, 200), display, labelStyle);
-
-        labelStyle.fontSize = 20;
-        labelStyle.alignment = TextAnchor.UpperLeft;
-        labelStyle.normal.textColor = Color.white;
-        GUI.Label(new Rect(20, 20, 600, 150), $"POWER: {Mathf.Floor(power)}%\nSCORE: {score}\nTOTAL: {Mathf.Floor(totalPower)}", labelStyle);
-
+        GUI.Label(new Rect(0, Screen.height/2-100, Screen.width, 200), display, style);
+        style.fontSize = 20;
+        style.alignment = TextAnchor.UpperLeft;
+        style.normal.textColor = Color.white;
+        GUI.Label(new Rect(20, 20, 600, 150), "POWER: " + Mathf.Floor(power) + "%\nSCORE: " + score + "\nTOTAL: " + Mathf.Floor(totalPower), style);
         if (!isPlaying) {
-            labelStyle.fontSize = 80;
-            labelStyle.normal.textColor = Color.red;
-            labelStyle.alignment = TextAnchor.MiddleCenter;
-            GUI.Label(new Rect(0, 0, Screen.width, Screen.height), "BLACKOUT", labelStyle);
+            style.fontSize = 80;
+            style.normal.textColor = Color.red;
+            style.alignment = TextAnchor.MiddleCenter;
+            GUI.Label(new Rect(0, 0, Screen.width, Screen.height), "BLACKOUT", style);
         }
     }
 
